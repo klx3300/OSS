@@ -12,10 +12,16 @@ import (
 var readableMu sync.Mutex
 
 // Logger represents a logger
-type Logger int
+type Logger struct {
+	LogLevel int
+	Name     string
+}
 
 // Log is the default logger
-const Log Logger = 0
+var Log = Logger{
+	LogLevel: 0,
+	Name:     "",
+}
 
 // These are debug levels
 const (
@@ -28,8 +34,9 @@ const (
 
 // Logln is the log liner
 func (lg Logger) Logln(level int, levelname string, args ...interface{}) {
-	if int(lg) <= level {
-		variParams := append([]interface{}{"[" + levelname + "]", "(" + time.Now().Format("2006/01/02 15:04:05.999") + ")"}, args...)
+	if lg.LogLevel <= level {
+		variParams := append([]interface{}{"[" + levelname + "]", "(" + time.Now().Format("2006/01/02 15:04:05") + ") " +
+			lg.Name}, args...)
 		readableMu.Lock()
 		fmt.Fprintln(os.Stderr, variParams...)
 		readableMu.Unlock()

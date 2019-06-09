@@ -9,7 +9,10 @@ import (
 	"time"
 )
 
-const log logger.Logger = 0
+var log = logger.Logger{
+	LogLevel: 0,
+	Name:     "EventBus:",
+}
 
 // EventBus is a bus for events dispatched to it.
 type EventBus struct {
