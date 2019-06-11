@@ -131,6 +131,9 @@ func transistionHandler() {
 			log.Debugln("Starting display..")
 			currwnd.Show()
 		case WND_USER_ORDER_DETAIL:
+			setupWndUserOrderDetail()
+			log.Debugln("Starting display..")
+			currwnd.Show()
 		default:
 			log.FailLn("transisting to undefined window", nextTransist)
 			return
