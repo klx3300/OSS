@@ -2,6 +2,7 @@ package candies
 
 import (
 	"evbus"
+	"time"
 )
 
 // EventTypeUnrecoverableFail represents some unrecoverable failure happened.
@@ -50,6 +51,8 @@ func NewChannelSubscriber(evtype int, pri int, consumed bool, theChannel chan ev
 // FastGG simply declares unrecoverable happened.
 func FastGG(info string, ebus *evbus.EventBus) {
 	ebus.PublishEvent(NewEvent(info).Type(EventTypeUnrecoverableFail).Fin())
+	// wait for GG to happen
+	<-time.After(5 * time.Second)
 }
 
 // FastRegister frees you from handling errors

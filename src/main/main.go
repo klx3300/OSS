@@ -22,6 +22,15 @@ var log = logger.Logger{
 var currapp fyne.App
 var currwnd fyne.Window
 
+// these are for fast access
+var curruid int
+var selshopid int
+var selshopnm string
+var selstockid int
+var selstocknm string
+var selorderid int
+var selordershop int
+
 const (
 	WND_LOADING = iota
 	WND_LOGIN
@@ -30,15 +39,13 @@ const (
 	WND_MERCHANT_SHOP_DETAIL
 	WND_MERCHANT_STOCK_ADD
 	WND_MERCHANT_STOCK_DETAIL
-	WND_MERCHANT_ORDER_LIST
-	WND_MERCHANT_ORDER_DETAIL
 	WND_USER_MAIN
-	WND_USER_ORDER_LIST
-	WND_USER_ORDER_DETAIL
-	WND_USER_SHOP_LIST
-	WND_USER_SHOP_DETAIL
+	WND_USER_SEARCH
 	WND_USER_STOCK_DETAIL
 	WND_USER_NEW_ORDER
+	WND_MERCHANT_ORDER_DETAIL
+	WND_USER_ORDER_LIST
+	WND_USER_ORDER_DETAIL
 )
 
 var chanTransist = make(chan int)
@@ -87,16 +94,38 @@ func transistionHandler() {
 			log.Debugln("Starting display..")
 			currwnd.Show()
 		case WND_MERCHANT_MAIN:
+			setupWndMerchantMain()
+			log.Debugln("Starting display..")
+			currwnd.Show()
 		case WND_MERCHANT_SHOP_DETAIL:
-		case WND_MERCHANT_STOCK_DETAIL:
+			setupWndMerchantShopDetail()
+			log.Debugln("Starting display..")
+			currwnd.Show()
 		case WND_MERCHANT_STOCK_ADD:
-		case WND_MERCHANT_ORDER_LIST:
+			setupWndMerchantStockAdd()
+			log.Debugln("Starting display..")
+			currwnd.Show()
+		case WND_MERCHANT_STOCK_DETAIL:
+			setupWndMerchantStockDetail()
+			log.Debugln("Starting display..")
+			currwnd.Show()
 		case WND_MERCHANT_ORDER_DETAIL:
 		case WND_USER_MAIN:
-		case WND_USER_SHOP_LIST:
-		case WND_USER_SHOP_DETAIL:
+			setupWndUserMain()
+			log.Debugln("Starting display..")
+			currwnd.Show()
+		case WND_USER_SEARCH:
+			setupWndUserSearch()
+			log.Debugln("Starting display..")
+			currwnd.Show()
 		case WND_USER_NEW_ORDER:
+			setupWndUserNewOrder()
+			log.Debugln("Starting display..")
+			currwnd.Show()
 		case WND_USER_STOCK_DETAIL:
+			setupWndUserStockDetail()
+			log.Debugln("Starting display..")
+			currwnd.Show()
 		case WND_USER_ORDER_LIST:
 		case WND_USER_ORDER_DETAIL:
 		default:

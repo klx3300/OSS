@@ -85,7 +85,7 @@ Order Information Table
 
 `DeliveryDetail` string
 
-`Status` string: `issued`, `paid`, `delivered`, `finished`.
+`Status` string: `issued`, `paid`, `delivered`, `finished`, `cancelled`.
 
 
 
@@ -135,6 +135,7 @@ create table order_info (
 	orderid int not null auto_increment,
     cust int not null,
     stock int not null,
+    shop int not null,
     amount int not null,
     inst_price double not null,
     price_sum double not null,
@@ -143,6 +144,7 @@ create table order_info (
     stat text not null,
     primary key (orderid),
     foreign key (cust) references users (uid),
+    foreign key (shop) references shop_info (shopid),
     foreign key (stock) references stock_info (stockid)
 );
 ```
